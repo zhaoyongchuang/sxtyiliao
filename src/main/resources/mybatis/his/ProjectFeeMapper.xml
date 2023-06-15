@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.his.mapper.ProjectFeeMapper">
+
+
+    <resultMap type="ProjectFee" id="ProjectFeeResult">
+        <result property="projectId"    column="project_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="keyword"    column="keyword"    />
+        <result property="projectUnitprice"    column="project_unitprice"    />
+        <result property="projectCost"    column="project_cost"    />
+        <result property="projectTimes"    column="project_times"    />
+        <result property="projectType"    column="project_type"    />
+        <result property="projectDeptId"    column="project_dept_id"    />
+        <result property="status"    column="status"    />
+        <result property="ext01"    column="ext_01"    />
+        <result property="ext02"    column="ext_02"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+
+
+    <insert id="insertPojectFee" parameterType="ProjectFee">
+        insert into doctor_project_fee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectName != null and projectName != ''">project_name,</if>
+            <if test="keyword != null">keyword,</if>
+            <if test="projectUnitprice != null">project_unitprice,</if>
+            <if test="projectCost != null">project_cost,</if>
+            <if test="projectTimes != null">project_times,</if>
+            <if test="projectType != null and projectType != ''">project_type,</if>
+            <if test="projectDeptId != null">project_dept_id,</if>
+            <if test="status != null">status,</if>
+            <if test="ext01 != null">ext_01,</if>
+            <if test="ext02 != null">ext_02,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectName != null and projectName != ''">#{projectName},</if>
+            <if test="keyword != null">#{keyword},</if>
+            <if test="projectUnitprice != null">#{projectUnitprice},</if>
+            <if test="projectCost != null">#{projectCost},</if>
+            <if test="projectTimes != null">#{projectTimes},</if>
+            <if test="projectType != null and projectType != ''">#{projectType},</if>
+            <if test="projectDeptId != null">#{projectDeptId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="ext01 != null">#{ext01},</if>
+            <if test="ext02 != null">#{ext02},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+
+
+    <sql id="selectProjectFeeVo">
+        select project_id, project_name, keyword, project_unitprice, project_cost, project_times, project_type, project_dept_id, status, ext_01, ext_02, create_by, create_time, update_by, update_time, remark from doctor_project_fee
+    </sql>
+
+    <select id="selectProjectFeeById" resultMap="ProjectFeeResult">
+        <include refid="selectProjectFeeVo"/>
+        where project_id=#{param1}
+    </select>
+
+
+    <select id="selectProjectFeeList"  resultMap="ProjectFeeResult">
+        <include refid="selectProjectFeeVo"/>
+        <where>
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="keyword != null  and keyword != ''"> and keyword = #{keyword}</if>
+            <if test="projectType != null  and projectType != ''"> and project_type = #{projectType}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+
+
+    <update id="updateProjectFee" parameterType="ProjectFee">
+        update doctor_project_fee
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectName != null and projectName != ''">project_name = #{projectName},</if>
+            <if test="keyword != null">keyword = #{keyword},</if>
+            <if test="projectUnitprice != null">project_unitprice = #{projectUnitprice},</if>
+            <if test="projectCost != null">project_cost = #{projectCost},</if>
+            <if test="projectTimes != null">project_times = #{projectTimes},</if>
+            <if test="projectType != null and projectType != ''">project_type = #{projectType},</if>
+            <if test="projectDeptId != null">project_dept_id = #{projectDeptId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="ext01 != null">ext_01 = #{ext01},</if>
+            <if test="ext02 != null">ext_02 = #{ext02},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where project_id = #{projectId}
+    </update>
+
+
+
+
+
+    <delete id="deleteProjectFee">
+        delete from doctor_project_fee where project_id=#{param1}
+    </delete>
+
+
+</mapper>

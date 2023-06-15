@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.his.mapper.HisDeptMapper">
+
+	<resultMap type="HisDept" id="HisDeptResult">
+		<id     property="deptId"        column="dept_id"       />
+		<result property="deptName"      column="dept_name"     />
+		<result property="deptCode"      column="dept_code"     />
+		<result property="deptNum"      column="dept_num"     />
+		<result property="deptLeader"      column="dept_leader"     />
+		<result property="deptPhone"      column="dept_phone"     />
+		<result property="status"        column="status"        />
+		<result property="createBy"      column="create_by"     />
+		<result property="createTime"    column="create_time"   />
+		<result property="updateBy"      column="update_by"     />
+		<result property="updateTime"    column="update_time"   />
+		<result property="remark"        column="remark"        />
+<!--		<result property="deptSort"        column="dept_sort"        />-->
+	</resultMap>
+
+	<sql id="selectDeptVo">
+        select dept_id, dept_code, dept_name, dept_num,dept_leader,dept_phone, status, create_by, create_time, remark
+		from doctor_dept
+    </sql>
+
+	<select id="selectDeptList" parameterType="HisDept" resultMap="HisDeptResult">
+		<include refid="selectDeptVo"/>
+		<where>
+			<if test="deptName != null and deptName != ''">
+				AND dept_name like concat('%', #{deptName}, '%')
+			</if>
+			<if test="status != null and status != ''">
+				AND status = #{status}
+			</if>
+
+		</where>
+	</select>
+
+
+	<insert id="insertDept" parameterType="HisDept" useGeneratedKeys="true" keyProperty="deptId">
+		insert into doctor_dept(
+		<if test="deptId != null and deptId != 0">dept_id,</if>
+		<if test="deptName != null and deptName != ''">dept_name,</if>
+		<if test="deptCode != null and deptCode != ''">dept_code,</if>
+		<if test="deptNum != null and deptNum != 0">dept_num,</if>
+		<if test="deptLeader != null and deptLeader != ''">dept_leader,</if>
+		<if test="deptPhone != null and deptPhone != ''">dept_phone,</if>
+		<if test="status != null and status != ''">status,</if>
+		<if test="remark != null and remark != ''">remark,</if>
+		<if test="createBy != null and createBy != ''">create_by,</if>
+<!--		<if test="deptSort != null and deptSort != 0">dept_sort,</if>-->
+		create_time
+		)values(
+		<if test="deptId != null and deptId != 0">#{deptId},</if>
+		<if test="deptName != null and deptName != ''">#{deptName},</if>
+		<if test="deptCode != null and deptCode != ''">#{deptCode},</if>
+		<if test="deptNum != null and deptNum != 0">#{deptNum},</if>
+		<if test="deptLeader != null and deptLeader != ''">#{deptLeader},</if>
+		<if test="deptPhone != null and deptPhone != ''">#{deptPhone},</if>
+		<if test="status != null and status != ''">#{status},</if>
+		<if test="remark != null and remark != ''">#{remark},</if>
+		<if test="createBy != null and createBy != ''">#{createBy},</if>
+<!--		<if test="deptSort != null and deptSort != 0">#{deptSort},</if>-->
+		sysdate()
+		)
+	</insert>
+
+
+	<select id="selectDeptById" parameterType="Long" resultMap="HisDeptResult">
+		<include refid="selectDeptVo"/>
+		where dept_id = #{deptId}
+	</select>
+
+	<update id="updateDept" parameterType="HisDept">
+		update doctor_dept
+		<set>
+			<if test="deptName != null and deptName != ''">dept_name = #{deptName},</if>
+			<if test="deptCode != null and deptCode != ''">dept_code = #{deptCode},</if>
+			<if test="deptLeader != null and deptLeader != ''">dept_leader = #{deptLeader},</if>
+			<if test="deptPhone != null and deptPhone != ''">dept_phone = #{deptPhone},</if>
+<!--			<if test="deptSort != null and deptSort != 0">dept_sort = #{deptSort},</if>-->
+			<if test="status != null and status != ''">status = #{status},</if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+			update_time = sysdate()
+		</set>
+		where dept_id = #{deptId}
+	</update>
+
+	<delete id="deleteDeptByIds" parameterType="Long">
+		delete from doctor_dept where dept_id in
+		<foreach collection="array" item="deptId" open="(" separator="," close=")">
+			#{deptId}
+		</foreach>
+	</delete>
+</mapper>

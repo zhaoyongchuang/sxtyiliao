@@ -4,25 +4,53 @@ import com.ruoyi.project.his.domain.ProjectFee;
 
 import java.util.List;
 
-public interface ProjectFeeService {
-    //查询功能
-    List<ProjectFee> selectPojectFeeList(ProjectFee projectFee);
+public interface ProjectFeeService
+{
+    /**
+     * 查询ProjectFee
+     *
+     * @param projectId ProjectFeeID
+     * @return ProjectFee
+     */
+    public ProjectFee selectProjectFeeById(Long projectId);
 
-    //添加的操作
-    int insertPojectFee(ProjectFee projectFee);
+    /**
+     * 查询ProjectFee列表
+     *
+     * @param projectFee ProjectFee
+     * @return ProjectFee集合
+     */
+    public List<ProjectFee> selectProjectFeeList(ProjectFee projectFee);
 
-    //修改操作中的查询操作，（回显数据！）
-    ProjectFee selectProjectFeeById(Long projectId);
+    /**
+     * 新增ProjectFee
+     *
+     * @param projectFee ProjectFee
+     * @return 结果
+     */
+    public int insertProjectFee(ProjectFee projectFee);
 
-    //修改功能
-    int updateProjectFee(ProjectFee projectFee);
+    /**
+     * 修改ProjectFee
+     *
+     * @param projectFee ProjectFee
+     * @return 结果
+     */
+    public int updateProjectFee(ProjectFee projectFee);
 
-    //删除功能
-    public int deletePojectFee(Long[] projectIds);
+    /**
+     * 批量删除ProjectFee
+     *
+     * @param projectIds 需要删除的ProjectFeeID
+     * @return 结果
+     */
+    public int deleteProjectFeeByIds(Long[] projectIds);
 
-
-
-
-
-
+    /**
+     * 删除ProjectFee信息
+     *
+     * @param projectId ProjectFeeID
+     * @return 结果
+     */
+    public int deleteProjectFeeById(Long projectId);
 }

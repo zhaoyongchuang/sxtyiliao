@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.project.his.mapper.ProjectFeeMapper">
 
-
     <resultMap type="ProjectFee" id="ProjectFeeResult">
         <result property="projectId"    column="project_id"    />
         <result property="projectName"    column="project_name"    />
@@ -24,9 +23,32 @@
         <result property="remark"    column="remark"    />
     </resultMap>
 
+    <sql id="selectProjectFeeVo">
+        select project_id, project_name, keyword, project_unitprice, project_cost, project_times, project_type, project_dept_id, status, ext_01, ext_02, create_by, create_time, update_by, update_time, remark from doctor_project_fee
+    </sql>
 
+    <select id="selectProjectFeeList" parameterType="ProjectFee" resultMap="ProjectFeeResult">
+        <include refid="selectProjectFeeVo"/>
+        <where>
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="keyword != null  and keyword != ''"> and keyword = #{keyword}</if>
+            <if test="projectUnitprice != null "> and project_unitprice = #{projectUnitprice}</if>
+            <if test="projectCost != null "> and project_cost = #{projectCost}</if>
+            <if test="projectTimes != null  and projectTimes != ''"> and project_times = #{projectTimes}</if>
+            <if test="projectType != null  and projectType != ''"> and project_type = #{projectType}</if>
+            <if test="projectDeptId != null "> and project_dept_id = #{projectDeptId}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="ext01 != null  and ext01 != ''"> and ext_01 = #{ext01}</if>
+            <if test="ext02 != null  and ext02 != ''"> and ext_02 = #{ext02}</if>
+        </where>
+    </select>
 
-    <insert id="insertPojectFee" parameterType="ProjectFee">
+    <select id="selectProjectFeeById" parameterType="Long" resultMap="ProjectFeeResult">
+        <include refid="selectProjectFeeVo"/>
+        where project_id = #{projectId}
+    </select>
+
+    <insert id="insertProjectFee" parameterType="ProjectFee" useGeneratedKeys="true" keyProperty="projectId">
         insert into doctor_project_fee
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="projectName != null and projectName != ''">project_name,</if>
@@ -64,29 +86,6 @@
         </trim>
     </insert>
 
-
-
-    <sql id="selectProjectFeeVo">
-        select project_id, project_name, keyword, project_unitprice, project_cost, project_times, project_type, project_dept_id, status, ext_01, ext_02, create_by, create_time, update_by, update_time, remark from doctor_project_fee
-    </sql>
-
-    <select id="selectProjectFeeById" resultMap="ProjectFeeResult">
-        <include refid="selectProjectFeeVo"/>
-        where project_id=#{param1}
-    </select>
-
-
-    <select id="selectProjectFeeList"  resultMap="ProjectFeeResult">
-        <include refid="selectProjectFeeVo"/>
-        <where>
-            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
-            <if test="keyword != null  and keyword != ''"> and keyword = #{keyword}</if>
-            <if test="projectType != null  and projectType != ''"> and project_type = #{projectType}</if>
-            <if test="status != null  and status != ''"> and status = #{status}</if>
-        </where>
-    </select>
-
-
     <update id="updateProjectFee" parameterType="ProjectFee">
         update doctor_project_fee
         <trim prefix="SET" suffixOverrides=",">
@@ -109,13 +108,14 @@
         where project_id = #{projectId}
     </update>
 
-
-
-
-
-    <delete id="deleteProjectFee">
-        delete from doctor_project_fee where project_id=#{param1}
+    <delete id="deleteProjectFeeById" parameterType="Long">
+        delete from doctor_project_fee where project_id = #{projectId}
     </delete>
 
-
+    <delete id="deleteProjectFeeByIds" parameterType="String">
+        delete from doctor_project_fee where project_id in
+        <foreach item="projectId" collection="array" open="(" separator="," close=")">
+            #{projectId}
+        </foreach>
+    </delete>
 </mapper>

@@ -44,7 +44,7 @@ public class ProjectFee extends BaseEntity
     private Long projectDeptId;
 
     /** 执行状态（0正常 1失败） */
-    @Excel(name = "执行状态", readConverterExp = "0=正常,1=失败")
+    @Excel(name = "状态", readConverterExp = "0=正常,1=停用")
     private String status;
 
     /** 扩展字段1 */

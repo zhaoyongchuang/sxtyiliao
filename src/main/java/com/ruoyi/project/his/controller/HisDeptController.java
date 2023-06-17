@@ -86,6 +86,9 @@ public class HisDeptController extends BaseController {
         return toAjax(hisDeptService.insertDept(dept));
     }
 
+
+
+
     /**
      * 获取岗位列表
      */

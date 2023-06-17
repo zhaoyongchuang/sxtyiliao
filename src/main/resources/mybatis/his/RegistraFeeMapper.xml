@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.his.mapper.RegistraFeeMapper">
+
+    <resultMap type="RegistraFee" id="RegistraFeeResult">
+        <result property="registraId"    column="registra_id"    />
+        <result property="registraName"    column="registra_name"    />
+        <result property="registraUnitprice"    column="registra_unitprice"    />
+        <result property="status"    column="status"    />
+        <result property="ext01"    column="ext_01"    />
+        <result property="ext02"    column="ext_02"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectRegistraFeeVo">
+        select registra_id, registra_name, registra_unitprice, status, ext_01, ext_02, create_by, create_time, update_by, update_time, remark from doctor_registra_fee
+    </sql>
+
+    <select id="selectRegistraFeeList" parameterType="RegistraFee" resultMap="RegistraFeeResult">
+        <include refid="selectRegistraFeeVo"/>
+        <where>
+            <if test="registraName != null  and registraName != ''"> and registra_name like concat('%', #{registraName}, '%')</if>
+            <if test="registraUnitprice != null "> and registra_unitprice = #{registraUnitprice}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="ext01 != null  and ext01 != ''"> and ext_01 = #{ext01}</if>
+            <if test="ext02 != null  and ext02 != ''"> and ext_02 = #{ext02}</if>
+        </where>
+    </select>
+
+    <select id="selectRegistraFeeById" parameterType="Long" resultMap="RegistraFeeResult">
+        <include refid="selectRegistraFeeVo"/>
+        where registra_id = #{registraId}
+    </select>
+
+    <insert id="insertRegistraFee" parameterType="RegistraFee" useGeneratedKeys="true" keyProperty="registraId">
+        insert into doctor_registra_fee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="registraName != null and registraName != ''">registra_name,</if>
+            <if test="registraUnitprice != null">registra_unitprice,</if>
+            <if test="status != null">status,</if>
+            <if test="ext01 != null">ext_01,</if>
+            <if test="ext02 != null">ext_02,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="registraName != null and registraName != ''">#{registraName},</if>
+            <if test="registraUnitprice != null">#{registraUnitprice},</if>
+            <if test="status != null">#{status},</if>
+            <if test="ext01 != null">#{ext01},</if>
+            <if test="ext02 != null">#{ext02},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateRegistraFee" parameterType="RegistraFee">
+        update doctor_registra_fee
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="registraName != null and registraName != ''">registra_name = #{registraName},</if>
+            <if test="registraUnitprice != null">registra_unitprice = #{registraUnitprice},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="ext01 != null">ext_01 = #{ext01},</if>
+            <if test="ext02 != null">ext_02 = #{ext02},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where registra_id = #{registraId}
+    </update>
+
+    <delete id="deleteRegistraFeeById" parameterType="Long">
+        delete from doctor_registra_fee where registra_id = #{registraId}
+    </delete>
+
+    <delete id="deleteRegistraFeeByIds" parameterType="String">
+        delete from doctor_registra_fee where registra_id in
+        <foreach item="registraId" collection="array" open="(" separator="," close=")">
+            #{registraId}
+        </foreach>
+    </delete>
+</mapper>

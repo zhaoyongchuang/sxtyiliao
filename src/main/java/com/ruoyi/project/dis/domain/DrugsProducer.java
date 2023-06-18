@@ -1,4 +1,4 @@
-package com.ruoyi.project.his.domain;
+package com.ruoyi.project.dis.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -6,10 +6,10 @@ import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
 
 /**
- * ${subTable.functionName}对象 drugs_producer
+ * DrugsProducer对象 drugs_producer
  *
- * @author yc
- * @date 2023-06-18
+ * @author zyc
+ * @date 2023-06-21
  */
 public class DrugsProducer extends BaseEntity
 {

@@ -1,6 +1,5 @@
-package com.ruoyi.project.his.domain;
+package com.ruoyi.project.dis.domain;
 
-import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
@@ -10,7 +9,7 @@ import com.ruoyi.framework.web.domain.BaseEntity;
  * durgdurg对象 drugs_durg
  *
  * @author yc
- * @date 2023-06-18
+ * @date 2023-06-21
  */
 public class DrugsDurg extends BaseEntity
 {
@@ -63,8 +62,28 @@ public class DrugsDurg extends BaseEntity
     @Excel(name = "状态", readConverterExp = "0=正常,1警告")
     private String durgStatus;
 
-    /** $table.subTable.functionName信息 */
-    private List<DrugsProducer> drugsProducerList;
+    private DrugsProducer drugProducer;
+
+    public DrugsProducer getDrugProducer() {
+        return drugProducer;
+    }
+
+    public void setDrugProducer(DrugsProducer drugProducer) {
+        this.drugProducer = drugProducer;
+    }
+
+//    drugsProducer
+    /** 厂家id */
+//    private Long durgProducer;
+
+//    public Long getdurgProducer() {
+//        return durgProducer;
+//    }
+//
+//    public void setdurgProducer(Long proId) {
+//        this.durgProducer = proId;
+//    }
+
 
     public void setDurgId(Long durgId)
     {
@@ -175,14 +194,16 @@ public class DrugsDurg extends BaseEntity
         return durgStatus;
     }
 
-    public List<DrugsProducer> getDrugsProducerList()
+    private String proName;
+
+    public void setProName(String proName)
     {
-        return drugsProducerList;
+        this.proName = proName;
     }
 
-    public void setDrugsProducerList(List<DrugsProducer> drugsProducerList)
+    public String getProName()
     {
-        this.drugsProducerList = drugsProducerList;
+        return proName;
     }
 
     @Override
@@ -205,7 +226,6 @@ public class DrugsDurg extends BaseEntity
                 .append("updateBy", getUpdateBy())
                 .append("updateTime", getUpdateTime())
                 .append("remark", getRemark())
-                .append("drugsProducerList", getDrugsProducerList())
                 .toString();
     }
 }

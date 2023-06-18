@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.dis.mapper.DrugsProducerMapper">
+
+    <resultMap type="DrugsProducer" id="DrugsProducerResult">
+        <result property="proId"    column="pro_id"    />
+        <result property="proName"    column="pro_name"    />
+        <result property="proCode"    column="pro_code"    />
+        <result property="proBoss"    column="pro_boss"    />
+        <result property="proPhone"    column="pro_phone"    />
+        <result property="proKeywords"    column="pro_keywords"    />
+        <result property="proStatus"    column="pro_status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="proAddress"    column="pro_address"    />
+    </resultMap>
+
+    <sql id="selectDrugsProducerVo">
+        select pro_id, pro_name, pro_code, pro_boss, pro_phone, pro_keywords, pro_status, create_by, create_time, update_by, update_time, remark, pro_address from drugs_producer
+    </sql>
+
+    <select id="selectDrugsProducerList" parameterType="DrugsProducer" resultMap="DrugsProducerResult">
+        <include refid="selectDrugsProducerVo"/>
+        <where>
+            <if test="proName != null  and proName != ''"> and pro_name like concat('%', #{proName}, '%')</if>
+            <if test="proCode != null  and proCode != ''"> and pro_code = #{proCode}</if>
+            <if test="proBoss != null  and proBoss != ''"> and pro_boss = #{proBoss}</if>
+            <if test="proPhone != null  and proPhone != ''"> and pro_phone = #{proPhone}</if>
+            <if test="proKeywords != null  and proKeywords != ''"> and pro_keywords = #{proKeywords}</if>
+            <if test="proStatus != null  and proStatus != ''"> and pro_status = #{proStatus}</if>
+            <if test="proAddress != null  and proAddress != ''"> and pro_address = #{proAddress}</if>
+        </where>
+    </select>
+
+    <select id="selectDrugsProducerById" parameterType="Long" resultMap="DrugsProducerResult">
+        <include refid="selectDrugsProducerVo"/>
+        where pro_id = #{proId}
+    </select>
+
+    <insert id="insertDrugsProducer" parameterType="DrugsProducer" useGeneratedKeys="true" keyProperty="proId">
+        insert into drugs_producer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="proName != null">pro_name,</if>
+            <if test="proCode != null">pro_code,</if>
+            <if test="proBoss != null">pro_boss,</if>
+            <if test="proPhone != null">pro_phone,</if>
+            <if test="proKeywords != null">pro_keywords,</if>
+            <if test="proStatus != null">pro_status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="proAddress != null">pro_address,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="proName != null">#{proName},</if>
+            <if test="proCode != null">#{proCode},</if>
+            <if test="proBoss != null">#{proBoss},</if>
+            <if test="proPhone != null">#{proPhone},</if>
+            <if test="proKeywords != null">#{proKeywords},</if>
+            <if test="proStatus != null">#{proStatus},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="proAddress != null">#{proAddress},</if>
+        </trim>
+    </insert>
+
+    <update id="updateDrugsProducer" parameterType="DrugsProducer">
+        update drugs_producer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="proName != null">pro_name = #{proName},</if>
+            <if test="proCode != null">pro_code = #{proCode},</if>
+            <if test="proBoss != null">pro_boss = #{proBoss},</if>
+            <if test="proPhone != null">pro_phone = #{proPhone},</if>
+            <if test="proKeywords != null">pro_keywords = #{proKeywords},</if>
+            <if test="proStatus != null">pro_status = #{proStatus},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="proAddress != null">pro_address = #{proAddress},</if>
+        </trim>
+        where pro_id = #{proId}
+    </update>
+
+    <delete id="deleteDrugsProducerById" parameterType="Long">
+        delete from drugs_producer where pro_id = #{proId}
+    </delete>
+
+    <delete id="deleteDrugsProducerByIds" parameterType="String">
+        delete from drugs_producer where pro_id in
+        <foreach item="proId" collection="array" open="(" separator="," close=")">
+            #{proId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.dis.mapper.DrugsDrugMapper">
+
+    <resultMap type="DrugsDurg" id="rm1">
+        <result property="durgId" column="durg_id"/>
+        <result property="durgName" column="durg_name"/>
+        <result property="durgCode" column="durg_code"/>
+        <result property="durgProducer" column="durg_producer"/>
+        <result property="durgType" column="durg_type"/>
+        <result property="durgOtcType" column="durg_otc_type"/>
+        <result property="durgUnit" column="durg_unit"/>
+        <result property="durgOtcPrice" column="durg_otc_price"/>
+        <result property="durgNumber" column="durg_number"/>
+        <result property="durgNumberMin" column="durg_number_min"/>
+        <result property="durgConvert" column="durg_convert"/>
+        <result property="durgStatus" column="durg_status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+        <association property="drugProducer" javaType="DrugsProducer">
+            <id column="pro_id" property="proId"/>
+            <result column="pro_name" property="proName"/>
+        </association>
+    </resultMap>
+
+    <select id="listDurgdurg" resultMap="rm1">
+        select a.durg_id, a.durg_name, a.durg_code, a.durg_producer, a.durg_type, a.durg_otc_type, a.durg_unit, a.durg_otc_price, a.durg_number, a.durg_number_min, a.durg_convert, a.durg_status, a.create_by, a.create_time, a.update_by, a.update_time, a.remark,
+        b.pro_id, b.pro_name, b.pro_code, b.pro_boss, b.pro_phone, b.pro_keywords, b.pro_status, b.create_by, b.create_time, b.update_by, b.update_time, b.remark, b.pro_address
+        from drugs_durg a
+        left join drugs_producer b on b.pro_id = a.durg_id
+        <where>
+            <if test="durgName != null  and durgName != ''">and durg_name like concat('%', #{durgName}, '%')</if>
+            <if test="durgCode != null  and durgCode != ''">and durg_code = #{durgCode}</if>
+            <if test="durgProducer != null ">and durg_producer like concat('%', #{durgProducer}, '%')</if>
+            <if test="durgType != null  and durgType != ''">and durg_type = #{durgType}</if>
+            <if test="durgOtcType != null  and durgOtcType != ''">and durg_otc_type = #{durgOtcType}</if>
+            <if test="durgUnit != null  and durgUnit != ''">and durg_unit = #{durgUnit}</if>
+            <if test="durgOtcPrice != null ">and durg_otc_price = #{durgOtcPrice}</if>
+            <if test="durgNumber != null ">and durg_number = #{durgNumber}</if>
+            <if test="durgNumberMin != null ">and durg_number_min = #{durgNumberMin}</if>
+            <if test="durgConvert != null ">and durg_convert = #{durgConvert}</if>
+            <if test="durgStatus != null  and durgStatus != ''">and durg_status = #{durgStatus}</if>
+            <!--            <if test="drugsProducer.proId != null  and drugsProducer.proId != ''">and p.pro_id = #{drugsProducer.proId}</if>-->
+            <!--            <if test="drugsProducer.proName != null  and drugsProducer.proName != ''">and p.pro_name= #{drugsProducer.proName}</if>-->
+        </where>
+    </select>
+
+
+
+
+    <insert id="addDurgdurg" parameterType="DrugsDurg" useGeneratedKeys="true" keyProperty="durgId">
+        insert into drugs_durg
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="durgName != null">durg_name,</if>
+            <if test="durgCode != null">durg_code,</if>
+            <if test="durgProducer != null">durg_producer,</if>
+            <if test="durgType != null">durg_type,</if>
+            <if test="durgOtcType != null">durg_otc_type,</if>
+            <if test="durgUnit != null">durg_unit,</if>
+            <if test="durgOtcPrice != null">durg_otc_price,</if>
+            <if test="durgNumber != null">durg_number,</if>
+            <if test="durgNumberMin != null">durg_number_min,</if>
+            <if test="durgConvert != null">durg_convert,</if>
+            <if test="durgStatus != null">durg_status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="durgName != null">#{durgName},</if>
+            <if test="durgCode != null">#{durgCode},</if>
+            <if test="durgProducer != null">#{durgProducer},</if>
+            <if test="durgType != null">#{durgType},</if>
+            <if test="durgOtcType != null">#{durgOtcType},</if>
+            <if test="durgUnit != null">#{durgUnit},</if>
+            <if test="durgOtcPrice != null">#{durgOtcPrice},</if>
+            <if test="durgNumber != null">#{durgNumber},</if>
+            <if test="durgNumberMin != null">#{durgNumberMin},</if>
+            <if test="durgConvert != null">#{durgConvert},</if>
+            <if test="durgStatus != null">#{durgStatus},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateDrugsDurg" parameterType="DrugsDurg">
+        update drugs_durg
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="durgName != null">durg_name = #{durgName},</if>
+            <if test="durgCode != null">durg_code = #{durgCode},</if>
+            <if test="durgProducer != null">durg_producer = #{durgProducer},</if>
+            <if test="durgType != null">durg_type = #{durgType},</if>
+            <if test="durgOtcType != null">durg_otc_type = #{durgOtcType},</if>
+            <if test="durgUnit != null">durg_unit = #{durgUnit},</if>
+            <if test="durgOtcPrice != null">durg_otc_price = #{durgOtcPrice},</if>
+            <if test="durgNumber != null">durg_number = #{durgNumber},</if>
+            <if test="durgNumberMin != null">durg_number_min = #{durgNumberMin},</if>
+            <if test="durgConvert != null">durg_convert = #{durgConvert},</if>
+            <if test="durgStatus != null">durg_status = #{durgStatus},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where durg_id = #{durgId}
+    </update>
+
+
+    <delete id="deleteDrugsDurgById" parameterType="Long">
+        delete from drugs_durg where durg_id = #{durgId}
+    </delete>
+
+
+
+
+
+
+
+</mapper>

@@ -63,7 +63,7 @@ public interface DrugsDurgMapper
     /**
      * 批量删除${subTable.functionName}
      *
-     * @param customerIds 需要删除的数据ID
+     * @param durgIds 需要删除的数据ID
      * @return 结果
      */
     public int deleteDrugsProducerByProIds(Long[] durgIds);
@@ -80,8 +80,10 @@ public interface DrugsDurgMapper
     /**
      * 通过durgdurgID删除${subTable.functionName}信息
      *
-     * @param roleId 角色ID
+     * @param durgId 角色ID
      * @return 结果
      */
     public int deleteDrugsProducerByProId(Long durgId);
+
+    List<DrugsDurg> selectDrugsDurgListByProId(Long proId,String durgName,String durgType,String durgCode ,String durgDosage,String durgStatu );
 }

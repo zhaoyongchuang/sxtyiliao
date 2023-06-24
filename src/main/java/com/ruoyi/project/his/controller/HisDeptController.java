@@ -78,9 +78,8 @@ public class HisDeptController extends BaseController {
     /**
      * 新增科室
      */
-    @PreAuthorize("@ss.hasPermi('his:dept:add')")
-    @Log(title = "科室管理", businessType = BusinessType.INSERT)
-    @PostMapping
+//    @PreAuthorize("@ss.hasPermi('his:dept:add')")
+//    @Log(title = "科室管理", businessType = BusinessType.INSERT)
     public AjaxResult add(@Validated @RequestBody HisDept dept) {
         dept.setCreateBy(SecurityUtils.getUsername());
         return toAjax(hisDeptService.insertDept(dept));

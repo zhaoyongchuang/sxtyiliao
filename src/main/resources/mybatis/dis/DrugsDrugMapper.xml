@@ -17,11 +17,6 @@
         <result property="durgNumberMin" column="durg_number_min"/>
         <result property="durgConvert" column="durg_convert"/>
         <result property="durgStatus" column="durg_status"/>
-        <result property="createBy" column="create_by"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="remark" column="remark"/>
         <association property="drugProducer" javaType="DrugsProducer">
             <id column="pro_id" property="proId"/>
             <result column="pro_name" property="proName"/>
@@ -45,33 +40,33 @@
             <if test="durgNumberMin != null ">and durg_number_min = #{durgNumberMin}</if>
             <if test="durgConvert != null ">and durg_convert = #{durgConvert}</if>
             <if test="durgStatus != null  and durgStatus != ''">and durg_status = #{durgStatus}</if>
-            <!--            <if test="drugsProducer.proId != null  and drugsProducer.proId != ''">and p.pro_id = #{drugsProducer.proId}</if>-->
-            <!--            <if test="drugsProducer.proName != null  and drugsProducer.proName != ''">and p.pro_name= #{drugsProducer.proName}</if>-->
+<!--                        <if test="drugProducer.proId != null  and drugProducer.proId != ''">and b.pro_id = #{drugProducer.proId}</if>-->
+<!--                        <if test="drugProducer.proName != null  and drugProducer.proName != ''">and b.pro_name= #{drugProducer.proName}</if>-->
         </where>
     </select>
 
 
 
 
-    <insert id="addDurgdurg" parameterType="DrugsDurg" useGeneratedKeys="true" keyProperty="durgId">
+    <insert id="addDurgdurg" parameterType="DrugsDurg"  keyProperty="durgId">
         insert into drugs_durg
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="durgName != null">durg_name,</if>
             <if test="durgCode != null">durg_code,</if>
-            <if test="durgProducer != null">durg_producer,</if>
+#             <if test="durgProducer != null">durg_producer,</if>
             <if test="durgType != null">durg_type,</if>
             <if test="durgOtcType != null">durg_otc_type,</if>
             <if test="durgUnit != null">durg_unit,</if>
             <if test="durgOtcPrice != null">durg_otc_price,</if>
-            <if test="durgNumber != null">durg_number,</if>
-            <if test="durgNumberMin != null">durg_number_min,</if>
-            <if test="durgConvert != null">durg_convert,</if>
+#             <if test="durgNumber != null">durg_number,</if>
+#             <if test="durgNumberMin != null">durg_number_min,</if>
+#             <if test="durgConvert != null">durg_convert,</if>
             <if test="durgStatus != null">durg_status,</if>
-            <if test="createBy != null">create_by,</if>
-            <if test="createTime != null">create_time,</if>
-            <if test="updateBy != null">update_by,</if>
-            <if test="updateTime != null">update_time,</if>
-            <if test="remark != null">remark,</if>
+#             <if test="createBy != null">create_by,</if>
+#             <if test="createTime != null">create_time,</if>
+#             <if test="updateBy != null">update_by,</if>
+#             <if test="updateTime != null">update_time,</if>
+#             <if test="remark != null">remark,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="durgName != null">#{durgName},</if>

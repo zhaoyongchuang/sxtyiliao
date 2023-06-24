@@ -41,6 +41,7 @@ public class DrugsDrugController extends BaseController {
 
     // 修改药品
     @PreAuthorize("@ss.hasPermi('dis:durgdurg:edit')")
+    @Log(title = "厂家管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody DrugsDurg drugsDurg) {
         drugsDurg.setUpdateBy(SecurityUtils.getUsername());

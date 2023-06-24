@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.pill.mapper.PillDrugMapper">
+    
+    <resultMap type="PillDrug" id="PillDrugResult">
+        <result property="durgId"    column="durg_id"    />
+        <result property="durgName"    column="durg_name"    />
+        <result property="durgCode"    column="durg_code"    />
+        <result property="durgProducer"    column="durg_producer"    />
+        <result property="durgType"    column="durg_type"    />
+        <result property="durgOtcType"    column="durg_otc_type"    />
+        <result property="durgUnit"    column="durg_unit"    />
+        <result property="durgOtcPrice"    column="durg_otc_price"    />
+        <result property="durgNumber"    column="durg_number"    />
+        <result property="durgNumberMin"    column="durg_number_min"    />
+        <result property="durgConvert"    column="durg_convert"    />
+        <result property="durgStatus"    column="durg_status"    />
+        <association property="pillFactory" javaType="pillFactory" resultMap="com.ruoyi.project.pill.mapper.PillFactoryMapper.PillFactoryResult"/>
+    </resultMap>
+
+    <sql id="selectPillDrugVo">
+        select dd.*, dp.* from drugs_durg dd left join drugs_producer dp on dd.durg_producer = dp.pro_id
+    </sql>
+
+
+    <select id="selectPillDrugList" parameterType="PillDrug" resultMap="PillDrugResult">
+        <include refid="selectPillDrugVo"/>
+        <where>
+            <if test="durgName != null  and durgName != ''"> and dd.durg_name like concat('%', #{durgName}, '%')</if>
+            <if test="durgProducer != null "> and dd.durg_producer = #{durgProducer}</if>
+            <if test="pillFactory != null and pillFactory.proName != null and pillFactory.proName != ''">
+                and dp.pro_name like concat('%', #{pillFactory.proName}, '%')
+            </if>
+            <if test="durgType != null  and durgType != ''"> and pd.drug_type = #{durgType}</if>
+             <if test="durgOtcType != null  and durgOtcType != ''"> and pd.drug_otc_type = #{durgOtcType}</if>
+        </where>
+    </select>
+
+    <select id="selectPillDrugByDrugId" parameterType="Long" resultMap="PillDrugResult">
+        <include refid="selectPillDrugVo"/>
+        where durg_id = #{durg_id}
+    </select>
+
+    <insert id="insertPillDrug" parameterType="PillDrug" useGeneratedKeys="true" keyProperty="durgId">
+        insert into drugs_durg(durg_name,durg_code,durg_producer,durg_type,durg_otc_type,durg_unit,durg_otc_price,durg_convert,create_by,create_time)
+        values(#{durgName},#{durgCode},#{durgProducer},#{durgType},#{durgOtcType},#{durgUnit},#{durgOtcPrice},#{durgConvert},#{durgStatus},sysdate())
+    </insert>
+
+    <update id="updatePillDrug" parameterType="PillDrug">
+        update drugs_durg
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="durgName != null  and durgName != ''">and durg_name like concat('%', #{durgName}, '%')</if>
+            <if test="durgCode != null  and durgCode != ''">and durg_code = #{durgCode}</if>
+            <if test="durgProducer != null">durg_producer = #{durgProducer},</if>
+            <if test="durgType != null  and durgType != ''">and durg_type = #{durgType}</if>
+            <if test="durgOtcType != null  and durgOtcType != ''">and durg_otc_type = #{durgOtcType}</if>
+            <if test="durgUnit != null  and durgUnit != ''">and durg_unit = #{durgUnit}</if>
+            <if test="durgOtcPrice != null ">and durg_otc_price = #{durgOtcPrice}</if>
+            <if test="durgConvert != null ">and durg_convert = #{durgConvert}</if>
+            <if test="durgStatus != null  and durgStatus != ''">and durg_status = #{durgStatus}</if>
+        </trim>
+        where drug_id = #{durgId}
+    </update>
+
+    <delete id="deletePillDrugByDrugId" parameterType="Long">
+        delete from drugs_durg where durg_id = #{durg_id}
+    </delete>
+
+    <delete id="deletePillDrugByDrugIds" parameterType="String">
+        delete from drugs_durg where drugs_durg.durg_id in
+        <foreach item="durg_id" collection="array" open="(" separator="," close=")">
+            #{durg_id}
+        </foreach>
+    </delete>
+</mapper>

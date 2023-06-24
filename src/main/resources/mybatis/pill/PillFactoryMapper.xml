@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.project.dis.mapper.DrugsProducerMapper">
-
-    <resultMap type="DrugsProducer" id="DrugsProducerResult">
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.pill.mapper.PillFactoryMapper">
+    
+    <resultMap type="PillFactory" id="PillFactoryResult">
         <result property="proId"    column="pro_id"    />
         <result property="proName"    column="pro_name"    />
         <result property="proCode"    column="pro_code"    />
@@ -20,12 +20,14 @@
         <result property="proAddress"    column="pro_address"    />
     </resultMap>
 
-    <sql id="selectDrugsProducerVo">
-        select pro_id, pro_name, pro_code, pro_boss, pro_phone, pro_keywords, pro_status, create_by, create_time, update_by, update_time, remark, pro_address from drugs_producer
+    <sql id="selectPillFactoryVo">
+        select pro_id, pro_name, pro_code, pro_boss, pro_phone, pro_keywords, pro_status, create_by, create_time, update_by, update_time, remark, pro_address
+            from drugs_producer
     </sql>
 
-    <select id="selectDrugsProducerList" parameterType="DrugsProducer" resultMap="DrugsProducerResult">
-        <include refid="selectDrugsProducerVo"/>
+
+    <select id="selectPillFactoryList" parameterType="PillFactory" resultMap="PillFactoryResult">
+        <include refid="selectPillFactoryVo"/>
         <where>
             <if test="proName != null  and proName != ''"> and pro_name like concat('%', #{proName}, '%')</if>
             <if test="proCode != null  and proCode != ''"> and pro_code = #{proCode}</if>
@@ -36,45 +38,31 @@
             <if test="proAddress != null  and proAddress != ''"> and pro_address = #{proAddress}</if>
         </where>
     </select>
-
-    <select id="selectDrugsProducerById" parameterType="Long" resultMap="DrugsProducerResult">
-        <include refid="selectDrugsProducerVo"/>
+    
+    <select id="selectPillFactoryByFactoryId" parameterType="Long" resultMap="PillFactoryResult">
+        <include refid="selectPillFactoryVo"/>
         where pro_id = #{proId}
     </select>
-
-    <insert id="insertDrugsProducer" parameterType="DrugsProducer" useGeneratedKeys="true" keyProperty="proId">
-        insert into
+        
+    <insert id="insertPillFactory" parameterType="PillFactory" useGeneratedKeys="true" keyProperty="factoryId">
+        insert into drugs_producer
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="proName != null">pro_name,</if>
-            <if test="proCode != null">pro_code,</if>
-            <if test="proBoss != null">pro_boss,</if>
-            <if test="proPhone != null">pro_phone,</if>
-            <if test="proKeywords != null">pro_keywords,</if>
-            <if test="proStatus != null">pro_status,</if>
-            <if test="createBy != null">create_by,</if>
-            <if test="createTime != null">create_time,</if>
-            <if test="updateBy != null">update_by,</if>
-            <if test="updateTime != null">update_time,</if>
-            <if test="remark != null">remark,</if>
-            <if test="proAddress != null">pro_address,</if>
-        </trim>
+         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="proName != null">#{proName},</if>
-            <if test="proCode != null">#{proCode},</if>
-            <if test="proBoss != null">#{proBoss},</if>
-            <if test="proPhone != null">#{proPhone},</if>
-            <if test="proKeywords != null">#{proKeywords},</if>
-            <if test="proStatus != null">#{proStatus},</if>
+            <if test="factoryName != null">#{factoryName},</if>
+            <if test="factoryCode != null">#{factoryCode},</if>
+            <if test="contact != null">#{contact},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="keyword != null">#{keyword},</if>
+            <if test="status != null">#{status},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
-            <if test="remark != null">#{remark},</if>
-            <if test="proAddress != null">#{proAddress},</if>
-        </trim>
+         </trim>
     </insert>
 
-    <update id="updateDrugsProducer" parameterType="DrugsProducer">
+    <update id="updatePillFactory" parameterType="PillFactory">
         update drugs_producer
         <trim prefix="SET" suffixOverrides=",">
             <if test="proName != null">pro_name = #{proName},</if>
@@ -93,13 +81,13 @@
         where pro_id = #{proId}
     </update>
 
-    <delete id="deleteDrugsProducerById" parameterType="Long">
+    <delete id="deletePillFactoryByFactoryId" parameterType="Long">
         delete from drugs_producer where pro_id = #{proId}
     </delete>
 
-    <delete id="deleteDrugsProducerByIds" parameterType="String">
-        delete from drugs_producer where pro_id in
-        <foreach item="proId" collection="array" open="(" separator="," close=")">
+    <delete id="deletePillFactoryByFactoryIds" parameterType="String">
+        delete from drugs_producer where drugs_producer.pro_id in
+        <foreach item="pro_id" collection="array" open="(" separator="," close=")">
             #{proId}
         </foreach>
     </delete>

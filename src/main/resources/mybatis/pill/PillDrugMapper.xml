@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 and dp.pro_name like concat('%', #{pillFactory.proName}, '%')
             </if>
             <if test="durgType != null  and durgType != ''"> and pd.drug_type = #{durgType}</if>
-             <if test="durgOtcType != null  and durgOtcType != ''"> and pd.drug_otc_type = #{durgOtcType}</if>
+             <if test="durgOtcType != null  and durgOtcType != ''"> and dd.durg_otc_type = #{durgOtcType}</if>
         </where>
     </select>
 

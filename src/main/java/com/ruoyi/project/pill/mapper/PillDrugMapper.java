@@ -14,6 +14,8 @@ import java.util.List;
  */
 public interface PillDrugMapper 
 {
+
+    List<PillDrug> selectBySupportId(Integer supportId);
     /**
      * 查询药品信息
      * 

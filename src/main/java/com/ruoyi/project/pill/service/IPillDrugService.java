@@ -2,6 +2,7 @@ package com.ruoyi.project.pill.service;
 
 
 
+import com.ruoyi.project.dis.domain.DrugsDurg;
 import com.ruoyi.project.pill.domain.PillDrug;
 
 import java.util.List;
@@ -12,8 +13,12 @@ import java.util.List;
  * @author izumi
  * @date 2023-05-13
  */
-public interface IPillDrugService 
+public interface IPillDrugService
 {
+
+
+
+    List<PillDrug> selectBySupportId(Integer supportId);
     /**
      * 查询药品信息
      * 

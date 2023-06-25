@@ -21,6 +21,13 @@ public class DrugsDrugController extends BaseController {
     @Autowired
     private DrugsDrugService drugsDrugService;
 
+    @GetMapping("/bySupport/{supportId}")
+    @PreAuthorize("@ss.hasPermi('dis:durgdurg:list')")
+    public TableDataInfo getBySupportId(@PathVariable Integer supportId) {
+        startPage();
+        return getDataTable(drugsDrugService.selectBySupportId(supportId));
+    }
+
     //    按条件查询
     //    @PreAuthorize("@ss.hasPermi('system:post:list')")
     @GetMapping("/list")

@@ -74,4 +74,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{durg_id}
         </foreach>
     </delete>
+
+
+    <sql id="selectDurgVO">
+        select a.durg_id, a.durg_name, a.durg_code, a.durg_producer,
+               a.durg_type, a.durg_otc_type, a.durg_unit, a.durg_otc_price, a.durg_number, a.durg_number_min, a.durg_convert, a.durg_status, a.create_by,
+               a.create_time, a.update_by, a.update_time, a.remark
+        from drugs_durg a
+    </sql>
+    <select id="selectBySupportId" resultMap="PillDrugResult" >
+        <include refid="selectDurgVO"></include>
+        left join drugs_pro_sup prosup
+        on a.durg_producer = prosup.prodeucer_id
+        where prosup.support_id = #{supportId}
+    </select>
 </mapper>

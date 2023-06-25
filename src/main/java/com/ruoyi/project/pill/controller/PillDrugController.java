@@ -30,6 +30,13 @@ public class PillDrugController extends BaseController
     @Autowired
     private IPillDrugService pillDrugService;
 
+    @GetMapping("/bySupport/{supportId}")
+    public TableDataInfo getBySupportId(@PathVariable Integer supportId) {
+        startPage();
+        return getDataTable(pillDrugService.selectBySupportId(supportId));
+    }
+
+
     /**
      * 查询药品信息列表
      */

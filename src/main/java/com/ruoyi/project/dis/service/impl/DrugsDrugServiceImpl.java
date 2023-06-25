@@ -14,6 +14,11 @@ public class DrugsDrugServiceImpl implements DrugsDrugService {
     private DrugsDrugMapper drugsDrugMapper;
 
     @Override
+    public List<DrugsDurg> selectBySupportId(Integer supportId) {
+        return drugsDrugMapper.selectBySupportId(supportId);
+    }
+
+    @Override
     public List<DrugsDurg> listDurgdurg(DrugsDurg drugsDurg) {
         return drugsDrugMapper.listDurgdurg(drugsDurg);
     }

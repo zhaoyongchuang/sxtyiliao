@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.dis.mapper.DrugsOrderAndDetailMapper">
+
+    <resultMap id="orderAndDetailMap" type="DrugsOrderAndDetail">
+        <result property="orderId" column="order_id"/>
+        <result property="supportId" column="support_id"/>
+        <result property="supportName" column="support_name"/>
+        <result property="durgId" column="durg_id"/>
+        <result property="durgName" column="durg_name"/>
+        <result property="detailBathNum" column="detail_bath_num"/>
+        <result property="detailTotalPrice" column="detail_total_price"/>
+        <result property="detailStatus" column="detail_status"/>
+        <result property="detailOperator" column="detail_operator"/>
+        <result property="orderMan" column="order_man"/>
+        <result property="detailDate" column="detail_date"/>
+        <result property="createTime" column="create_time"/>
+        <result property="detailId" column="detail_id"/>
+    </resultMap>
+
+    <select id="selectList" resultMap="orderAndDetailMap">
+        select `order`.order_id,`order`.order_man,`order`.create_time,
+        support.support_id,support.support_name,
+        drug.durg_id,drug.durg_name,
+        detail.detail_id,detail.detail_bath_num,detail.detail_total_price,
+        detail.detail_status,detail.detail_operator,detail.detail_date
+        from drugs_order_detail detail
+        left join
+        drugs_order `order`
+        on detail.order_id = `order`.order_id
+        left join
+        drugs_durg drug
+        on detail.detail_drugid=drug.durg_id
+        left join
+        drugs_support support
+        on `order`.order_sup_id=support.support_id
+        <where>
+            <if test="supportName!=null and supportName!=''">
+                and support.support_name like concat('%',#{supportName},'%')
+            </if>
+            <if test="orderMan!=null and orderMan!=''">
+                and `order`.order_man like concat('%',#{orderMan},'%')
+            </if>
+            <if test="detailStatus!=null and detailStatus >= 0" >
+                and detail.detail_status=#{detailStatus}
+            </if>
+        </where>
+    </select>
+
+
+
+</mapper>

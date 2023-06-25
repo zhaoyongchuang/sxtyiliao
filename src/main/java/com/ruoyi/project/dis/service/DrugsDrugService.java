@@ -5,6 +5,7 @@ import com.ruoyi.project.dis.domain.DrugsDurg;
 import java.util.List;
 
 public interface DrugsDrugService {
+    List<DrugsDurg> selectBySupportId(Integer supportId);
     List<DrugsDurg> listDurgdurg(DrugsDurg drugsDurg);
 
     int addDurgdurg(DrugsDurg drugsDurg);

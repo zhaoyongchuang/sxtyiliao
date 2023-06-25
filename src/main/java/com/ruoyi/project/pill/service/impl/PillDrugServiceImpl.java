@@ -20,7 +20,9 @@ public class PillDrugServiceImpl implements IPillDrugService
 {
     @Autowired
     private PillDrugMapper pillDrugMapper;
-
+    public List<PillDrug> selectBySupportId(Integer supportId) {
+        return pillDrugMapper.selectBySupportId(supportId);
+    }
     /**
      * 查询药品信息
      * 

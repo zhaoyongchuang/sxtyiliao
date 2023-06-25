@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.pill.mapper.DrugsSupportMapper">
+
+    <resultMap id="drugsSupportMap" type="DrugsSupport">
+        <result property="supportId" column="support_id"/>
+        <result property="supportName" column="support_name"/>
+        <result property="supportPhone" column="support_phone"/>
+        <result property="supportStatus" column="support_status"/>
+        <result property="supportCard" column="support_card"/>
+        <result property="supportAddress" column="support_address"/>
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+    <sql id="selectDrugSupportVO">
+        select support_id, support_name, support_phone, support_status, support_card, support_address, create_by,
+               create_time, update_by, update_time, remark
+        from drugs_support
+    </sql>
+    
+    <select id="selectAll" resultMap="drugsSupportMap">
+        <include refid="selectDrugSupportVO"></include>
+    </select>
+
+
+
+
+</mapper>

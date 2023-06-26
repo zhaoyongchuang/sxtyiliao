@@ -85,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectBySupportId" resultMap="PillDrugResult" >
         <include refid="selectDurgVO"></include>
         left join drugs_pro_sup prosup
-        on a.durg_producer = prosup.prodeucer_id
+        on a.durg_producer = prosup.producer_id
         where prosup.support_id = #{supportId}
     </select>
 </mapper>
